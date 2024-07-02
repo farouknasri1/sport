@@ -1,0 +1,30 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TeamService {
+  teamURL: string = 'http://localhost:3001/api/teams';
+  constructor(private http: HttpClient) {}
+
+  addTeam(team: any) {
+    return this.http.post<{isAdded:boolean}>(this.teamURL, team);
+  }
+
+  editTeam(teamObj: any) {
+    return this.http.put<{isEdit:boolean}>(this.teamURL, teamObj);
+  }
+
+  deleteTeam(id: any) {
+    return this.http.delete<{isDeleted:boolean}>(`${this.teamURL}/${id}`);;
+  }
+
+  getTeamById(id: any) {
+    return this.http.get<{team:any}>(`${this.teamURL}/${id}`);
+  }
+
+  getAllTeams() {
+    return this.http.get<{teams:any}>(this.teamURL);
+  }
+}
